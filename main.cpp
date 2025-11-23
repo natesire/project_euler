@@ -1,36 +1,23 @@
 #include <iostream>
 #include <cstdint>
 
-bool isOdd(long number) {
-	return number % 2 != 0;
-}
-
 int main () {
-	int squared_and_odd_summed = 0;
+	unsigned long sum = 0;
 	unsigned long squared = 0;
-	const int FIRST_Squared = 5;
-	int i = 0;
-	
-	while(true) {
-		i++;
+	const int FIRST_Squared = 11;
 
-		if(i > FIRST_Squared) {
-			std::cout << "stopping at: " << i << "\n";
-			break;
-		}
-		
-		squared = i * i;
+	for(int j = 1; j <= FIRST_Squared; j += 2) {
 
-		if(squared < 0) {
-			std::cout << "overflow detected at i: " << squared << "\n";
-			break;
-		}
-
-		if(isOdd(squared)) { 
-			std::cout << squared << " squared number is odd \n";
-			squared_and_odd_summed += squared; }
-		std::cout << "sum: " << squared_and_odd_summed << "\n";	
+		squared = j * j;
+		sum += squared;
+		std::cout << "j " << j << " squared to " << squared << ", squared is odd, sum now " << sum << std::endl;
 	}	
 	
-	return squared_and_odd_summed;
+	return 0; // what if I don't return anything?
 }
+
+// failed
+// 8443086211760
+// 8500711509336
+// 8500711509336
+// 8500711509336
