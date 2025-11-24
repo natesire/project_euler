@@ -4,13 +4,17 @@
 int main () {
 	unsigned long sum = 0;
 	unsigned long squared = 0;
-	const int FIRST_Squared = 11;
 
-	for(int j = 1; j <= FIRST_Squared; j += 2) {
+	for(unsigned long j = 1; j <= 598000; j += 2) {
 
-		squared = j * j;
-		sum += squared;
-		std::cout << "j " << j << " squared to " << squared << ", squared is odd, sum now " << sum << std::endl;
+		if(j % 2 == 0) {
+			throw std::runtime_error("j is even!");
+		} else {
+			squared = j * j;
+			sum = sum + squared;
+			std::cout << "j " << j << " squared to " << squared << ", squared is odd, sum now " << sum << std::endl;
+		}
+		
 	}	
 	
 	return 0; // what if I don't return anything?
@@ -20,4 +24,7 @@ int main () {
 // 8443086211760
 // 8500711509336
 // 8500711509336
+// 8500711509336
+// 178802000000
+// 89401000000
 // 8500711509336
