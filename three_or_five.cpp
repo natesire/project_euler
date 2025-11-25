@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ranges>
 
 int main() {
     int sum = 0;
