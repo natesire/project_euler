@@ -16,13 +16,23 @@ long divBy(long val, long by) {
 }
 
 int main() {
-    long max_product = 600851475143;
+    //long max_product = 600851475143;
+    long max_product = 32; 
     int two;
     Node* root = new Node{max_product, nullptr, nullptr, nullptr, nullptr}; 
 
-    std::cout << "root value: " << root->value << std::endl;
     long n = divBy(root->value, 2);
     root->next2 = new Node{n, nullptr, nullptr, nullptr, nullptr};
+
+
+    root->next2->next2 = new Node{divBy(root->next2->value, 2), nullptr, nullptr, nullptr, nullptr};
+
+    // iterate depth-first through tree
+    Node* current = root;
+    while(current != nullptr) {
+        std::cout << "current value: " << current->value << std::endl;
+        current = current->next2;
+    }
 
     return 0;
 }
