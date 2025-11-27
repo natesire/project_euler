@@ -4,10 +4,9 @@
 
 struct Node {
     long value;
-    Node* next2;
-    Node* next3;
-    Node* next5;
-    Node* next7;
+    //Node* parent;
+    std::vector<Node*> children;
+    std::vector<int> num;
 };
 
 long divBy(long val, long by) {
@@ -15,23 +14,47 @@ long divBy(long val, long by) {
     return 0;
 }
 
+bool isPrime(long val) {
+    if(val < 2) return false;
+    for(long i = 2; i * i <= val; ++i) {
+        if(val % i == 0) return false;
+    }
+    return true;
+}
+
+
 int main() {
     //long max_product = 600851475143;
-    long max_product = 32; 
-    int two;
-    Node* root = new Node{max_product, nullptr, nullptr, nullptr, nullptr}; 
+    //long max_product = 2 * 3 * 5 * 7;
+    long max_product = 2 * 2 * 2 * 2 * 2;
+    Node* root = new Node{max_product, {}};
 
-    long n = divBy(root->value, 2);
-    root->next2 = new Node{n, nullptr, nullptr, nullptr, nullptr};
+    std::vector<Node*> nodeStack; 
 
+    std::cout << "is prime " << max_product << ": " << isPrime(max_product) << std::endl;
+    
+    try {
+        root->children.push_back(new Node{divBy(root->value, 2), {}});
+        root->children.push_back(new Node{divBy(root->value, 3), {}});
+        root->children.push_back(new Node{divBy(root->value, 5), {}});
+        root->children.push_back(new Node{divBy(root->value, 7), {}});
 
-    root->next2->next2 = new Node{divBy(root->next2->value, 2), nullptr, nullptr, nullptr, nullptr};
-
+    //nodeStack.push_back(root->next2);
+    } catch(const std::exception& e) {
+        std::cout << "exception caught " << e.what() << std::endl;
+    }
+    
     // iterate depth-first through tree
     Node* current = root;
-    while(current != nullptr) {
-        std::cout << "current value: " << current->value << std::endl;
-        current = current->next2;
+    while(current != nullptr) { // nodes unvisited
+        nodeStack.push_back(current);
+        int childIndex = 0;
+        current = current->children.empty() ? nullptr : current->children[0];
+        //current->children.push_back(new Node{divBy(current->value, 2), {}});
+        if(current != nullptr) { 
+            std::cout << "current value:" << current->value << std::endl;
+            
+        }
     }
 
     return 0;
