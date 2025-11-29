@@ -4,14 +4,14 @@
 #include <cmath>
 
 struct Node {
-    long value;
+    double value;
     //Node* parent;
     std::vector<Node*> children;
     std::vector<int> num;
 };
 
-long divBy(long val, int by) {
-    if(val % by == 0) return val / by;
+double divBy(long val, int by) {
+    return val / by;
     return 0;
 }
 
@@ -28,11 +28,6 @@ bool createNeighbors(Node* current) {
     current->children.push_back(new Node{divBy(current->value, 3), {}});
     current->children.push_back(new Node{divBy(current->value, 5), {}});
     current->children.push_back(new Node{divBy(current->value, 7), {}});
-    return true;
-}
-
-bool visited(std::vector<Node*> stack, Node* node) {
-    stack.push_back(node);
     return true;
 }
 
@@ -56,32 +51,32 @@ bool pushStack(std::vector<Node*>& stack, Node* node) {
 
 int main() {
     //long max_product = 600851475143;
-    long product = pow(2, 10);
+    double product = pow(2, 8);
 
-    std::vector<Node*> nodeStack; 
+    std::vector<Node*> nodesToVisitStack; 
 
-    std::cout << "is prime " << product << ": " << isPrime(product) << std::endl;
-    
     // create depth-first through tree with stack
     Node* root = new Node{product, {}};
     int v;
     Node* current = nullptr;
-    pushStack(nodeStack, root);
-    while(nodeStack.size() > 0) { // nodes unvisited
-        current = nodeStack.back();
+    pushStack(nodesToVisitStack, root);
+    while(nodesToVisitStack.size() > 0) { 
+        current = nodesToVisitStack.back();
         createNeighbors(current);
-        visited(nodeStack, current);
+
+        //if(current->children[0])
+        //push(nodesToVisitStack, current);
 
         v = divBy(current->value, 2); // 0 should terminate this branch
         std::cout << "divBy result: " << v << std::endl;
         current->children[0]->value = v;
-        if(v == 1) popStack(nodeStack);
-        if(v > 0) pushStack(nodeStack, current->children[0]);
-        if(nodeStack.empty()) {
+        if(v == 1) popStack(nodesToVisitStack);
+        if(v > 0) pushStack(nodesToVisitStack, current->children[0]);
+        if(nodesToVisitStack.empty()) {
             std::cout << "stack empty, terminating" << std::endl;
             break;
         }
-        current = nodeStack.back();
+        current = nodesToVisitStack.back();
 
         //int childIndex = 0;
         //current = current->children.empty() ? nullptr : current->children[0];
